@@ -4,6 +4,6 @@
 
 # NEXT GAJI
 
-Aplikasi Sistem Pengelola Gaji untuk UMKM berbasis Node.JS dengan framework Next.JS
+Aplikasi Sistem Penggajian untuk UMKM berbasis Node.JS dengan framework Next.JS
 
 *Masih dalam tahap pengembangan awal*
