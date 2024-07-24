@@ -73,6 +73,7 @@ model Gaji {
   tunjangan_anak Int?     @default(0)
   tunjangan_transport Int?   @default(0)
   tunjangan_internet  Int?   @default(0)
+  tunjangan_makan     Int?   @default(0)
   bpjskes_perusahaan Float?     @default(0)
   bpjsjht_perusahaan Float?     @default(0)
   bpjsjkk_perusahaan Float?     @default(0)
@@ -84,10 +85,10 @@ model Gaji {
   bpjsjp_peg    Float?     @default(0)
   gaji_bersih_bulanan Int
   gaji_bersih_tahunan Int
-  ptkp_karyawan Int
-  pph21_bulanan Int
-  pph21_tahunan Int
-  gaji_diterima Int
+  ptkp_karyawan Int?
+  pph21_bulanan Int?
+  pph21_tahunan Int?
+  gaji_diterima Int?
   keterangan String?
 
   user          User      @relation("GajiKaryawan", fields:[userId], references: [id])
