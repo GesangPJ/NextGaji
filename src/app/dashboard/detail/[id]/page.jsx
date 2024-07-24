@@ -56,7 +56,7 @@ const DetailPage = () => {
     const fetchData = async () => {
       try {
         if (id) {
-          const response = await fetch(`/api/detail-kasbon?id=${id}`)
+          const response = await fetch(`/api/detail-gaji?id=${id}`)
 
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`)
