@@ -37,8 +37,11 @@ model User {
 
 model Pph21 {
   id             Int       @id @default(autoincrement())
-  nama_pph21     String?
-  nilai_pph21    Float?
+  pph21_60      Float?
+  pph21_250     Float?
+  pph21_500     Float?
+  pph21_5m      Float?
+  pph21_5ma     Float?
 
 }
 
