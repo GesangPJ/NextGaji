@@ -16,7 +16,8 @@
     "seedadmin": "node prisma/seedAdmin.js",
     "seedkaryawan": "node prisma/seedKaryawan.js",
     "seedbpjs": "node prisma/seedBpjs.js",
-    "seedpph21": "node prisma/seedPph21.js"
+    "seedpph21": "node prisma/seedPph21.js",
+    "seedptkp": "node prisma/seedPtkp.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
