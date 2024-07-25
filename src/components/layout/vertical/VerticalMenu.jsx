@@ -70,20 +70,22 @@ const VerticalMenu = ({ scrollMenu }) => {
             >
               Dashboard
             </MenuItem>
-            <MenuSection Label='Menu Kasbon'>
+            <MenuSection Label='Penggajian'>
               <SubMenu
-                label='Kasbon'
-                icon={<i className="ri-bill-line"></i>}
+                label='Slip Gaji'
+                icon={<i className="ri-receipt-line"></i>}
               >
-                <MenuItem href='/dashboard/request'>Request Kasbon</MenuItem>
-                <MenuItem href='/dashboard/bayar'>Konfirmasi Bayar</MenuItem>
+                <MenuItem href='/dashboard/gaji-karyawan'>Slip Gaji Karyawan</MenuItem>
+                <MenuItem href='/dashboard/gaji-semua'>Slip Gaji Keseluruhan</MenuItem>
               </SubMenu>
             </MenuSection>
             <SubMenu
-              label='Laporan'
-              icon={<i className='ri-file-chart-fill' />}
+              label='Data Pendukung'
+              icon={<i className="ri-database-2-line"></i>}
             >
-              <MenuItem href='/dashboard/cetak'>Ekspor Laporan</MenuItem>
+              <MenuItem href='/dashboard/bpjs'>Data BPJS</MenuItem>
+              <MenuItem href='/dashboard/pph21'>Data Pph21</MenuItem>
+              <MenuItem href='/dashboard/tunjangan'>Data Tunjangan</MenuItem>
             </SubMenu>
             <SubMenu
               label='Manajemen Akun'
@@ -95,7 +97,7 @@ const VerticalMenu = ({ scrollMenu }) => {
             </SubMenu>
             <SubMenu
               label='Bantuan'
-              icon={<i class="ri-question-line"></i>}
+              icon={<i className="ri-question-line"></i>}
             >
               <MenuItem href='/dashboard/bantuan'>Penggunaan</MenuItem>
               <MenuItem href='/dashboard/dokumentasi-api'>Dokumentasi API</MenuItem>
@@ -111,12 +113,12 @@ const VerticalMenu = ({ scrollMenu }) => {
             >
               Dashboard
             </MenuItem>
-            <MenuSection Label='Menu Kasbon'>
+            <MenuSection Label='Data Akun'>
               <SubMenu
-                label='Kasbon'
-                icon={<i className="ri-bill-line"></i>}
+                label='Akun'
+                icon={<i className="ri-account-circle-line"></i>}
               >
-                <MenuItem href='/dashboard/tambah-kasbon'>Tambah Kasbon</MenuItem>
+                <MenuItem href='/dashboard/edit-akun'>Edit Data Akun</MenuItem>
               </SubMenu>
               <SubMenu
               label='Bantuan'
