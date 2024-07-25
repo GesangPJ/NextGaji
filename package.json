@@ -15,7 +15,8 @@
     "postinstall": "prisma generate && npm run build:icons",
     "seedadmin": "node prisma/seedAdmin.js",
     "seedkaryawan": "node prisma/seedKaryawan.js",
-    "deletekasbon": "node prisma/deleteKasbon.js"
+    "seedbpjs": "node prisma/seedBpjs.js",
+    "seedpph21": "node prisma/seedPph21.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
