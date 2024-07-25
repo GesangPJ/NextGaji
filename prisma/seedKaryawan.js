@@ -17,7 +17,7 @@ async function main() {
   const status_akun = 'AKTIF'
   const nik = 53274507000099
   const npwp = 5552432335235
-  const jabatan = 'pemilik'
+  const jabatan = 'staff'
 
   // Hash the password
   const hashedPassword = await bcrypt.hash(password, 12)
