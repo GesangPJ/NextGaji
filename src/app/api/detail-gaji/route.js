@@ -29,8 +29,7 @@ export async function GET(req) {
     const gaji = await prisma.gaji.findUnique({
       where: { id: parseInt(id) },
       include: {
-        user: { select: { name: true } },
-        admin: { select: { name: true } }
+        user: { select: { name: true } }
       }
     })
 
