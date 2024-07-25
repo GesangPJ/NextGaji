@@ -30,7 +30,6 @@ model User {
   tanggungan     Int?       @default(0)
   gajipokok      Int
   jabatan        String
-  tunjangan_jabatan String?
   jeniskelamin   String
 
   gajiAsKaryawan  Gaji[]   @relation("GajiKaryawan")
@@ -63,6 +62,14 @@ model Bpjs {
 
 }
 
+model Tunjangan {
+  id            Int     @id @default(autoincrement())
+  tunjangan_lainnya   Int?  @default(0)
+  tunjangan_internet  Int?   @default(0)
+  tunjangan_makan     Int?   @default(0)
+  tunjangan_transport Int?   @default(0)
+}
+
 model Gaji {
   id            Int       @id @default(autoincrement())
   userId        Int
@@ -70,7 +77,7 @@ model Gaji {
   diubah        DateTime
   periode       String
   gaji_pokok     Int
-  tunjangan_anak Int?     @default(0)
+  tunjangan_lainnya Int?     @default(0)
   tunjangan_transport Int?   @default(0)
   tunjangan_internet  Int?   @default(0)
   tunjangan_makan     Int?   @default(0)
