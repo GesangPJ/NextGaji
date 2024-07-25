@@ -97,21 +97,38 @@ const DetailPage = () => {
   }
 
   if (!data) {
-    return <div>Data tidak ditemukan</div>
+    return <div>Slip Gaji tidak ditemukan</div>
   }
 
   const rows = [
-    { label: 'ID Kasbon', value: data.id },
     { label: 'ID Karyawan', value: data.userId },
-    { label: 'Nama', value: data.namaKaryawan },
-    { label: 'Jumlah', value: formatCurrency(data.jumlah) },
-    { label: 'Status Request', value: data.status_r },
-    { label: 'Status Bayar', value: data.status_b },
-    { label: 'Metode Pembayaran', value: data.metode },
-    { label: 'Keterangan', value: data.keterangan },
-    { label: 'Nama Admin', value: data.namaAdmin },
-    { label: 'Tanggal Kasbon Dibuat', value: formatDate(data.createdAt) },
-    { label: 'Tanggal Kasbon Diperbarui', value: formatDate(data.updatedAt) },
+    { label: 'Nama Karyawan', value: data.namaAkun },
+    { label: 'Jabatan', value: data.jabatan },
+    { label: 'Periode Gaji', value: data.periode},
+    { label: '--------------------', value:'----------------------------'},
+    { label: 'Gaji Pokok', value: data.gaji_pokok},
+    { label: 'Tunjangan Anak', value: data.tunjangan_anak},
+    { label: 'Tunjangan Transport', value: data.tunjangan_transport},
+    { label: 'Tunjangan Internet', value: data.tunjangan_internet},
+    { label: 'Tunjangan Makan', value: data.tunjangan_makan},
+    { label: '--------------------', value:'----------------------------'},
+    { label: 'Gaji Kotor', value: data.gaji_gross},
+    { label: '--------------------', value:'----------------------------'},
+    { label: 'Potongan', value:''},
+    { label: 'BPJS Kesehatan (KES)', value: data.bpjskes_peg},
+    { label: 'BPJS Jaminan Hari Tua (JHT)', value: data.bpjsjht_peg},
+    { label: 'BPJS Jaminan Pensiun (JP)', value: data.bpjsjp_peg},
+    { label: 'Pph 21 Bulanan', value: data.pph21_bulanan},
+    { label: 'Kontribusi Perusahaan', value:''},
+    { label: 'BPJS Kesehatan (KES)', value: data.bpjskes_perusahaan},
+    { label: 'BPJS Jaminan Hari Tua (JHT)', value: data.bpjsjht_perusahaan},
+    { label: 'BPJS Jaminan Kecelakaan Kerja (JKK)', value: data.bpjsjkk_perusahaan},
+    { label: 'BPJS Jaminan Kematian (JKM)', value: data.bpjsjkm_perusahaan},
+    { label: 'BPJS Jaminan Pensiun', value: data.bpjsjp_perusahaan},
+    { label: '--------------------', value:'----------------------------'},
+    { label: 'Gaji Diterima', value: formatCurrency(data.gaji_diterima) },
+    { label: '--------------------', value:'----------------------------'},
+    { label: 'Keterangan', value: data.keterangan},
   ]
 
   const handlePrint = () => {
@@ -151,10 +168,10 @@ const DetailPage = () => {
 
   return (
     <div>
-      <h1>Detail Kasbon : {data.namaKaryawan} | ID : {data.userId} </h1>
+      <h1>Data Slip Gaji : {data.namaAkun} | ID : {data.userId} </h1>
       <br />
       <TableContainer component={Paper}>
-        <Table id="detail-table" sx={{ minWidth: 200 }} aria-label="Detail Kasbon">
+        <Table id="detail-table" sx={{ minWidth: 200 }} aria-label="Detail Kasbon" className='border-none'>
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
