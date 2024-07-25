@@ -29,7 +29,7 @@ model User {
   telepon        Int?
   tanggungan     Int?       @default(0)
   gajipokok      Int
-  jabatan        String
+  jabatan        String?
   jeniskelamin   String
 
   gajiAsKaryawan  Gaji[]   @relation("GajiKaryawan")
@@ -37,28 +37,28 @@ model User {
 
 model Pph21 {
   id             Int       @id @default(autoincrement())
-  nama_pph21     String
-  nilai_pph21    Float
+  nama_pph21     String?
+  nilai_pph21    Float?
 
 }
 
 model Ptkp {
   id            Int     @id @default(autoincrement())
-  nama_ptkp     String
-  nilai_ptkp    Float
+  nama_ptkp     String?
+  nilai_ptkp    Float?
 
 }
 
 model Bpjs {
   id            Int     @id @default(autoincrement())
-  bpjskes_perusahaan Float
-  bpjsjht_perusahaan Float
-  bpjsjkk_perusahaan Float
-  bpjsjkm_perusahaan Float
-  bpjsjp_perusahaan Float
-  bpjskes_peg   Float
-  bpjsjht_peg   Float
-  bpjsjp_peg    Float
+  bpjskes_perusahaan Float?
+  bpjsjht_perusahaan Float?
+  bpjsjkk_perusahaan Float?
+  bpjsjkm_perusahaan Float?
+  bpjsjp_perusahaan Float?
+  bpjskes_peg   Float?
+  bpjsjht_peg   Float?
+  bpjsjp_peg    Float?
 
 }
 
