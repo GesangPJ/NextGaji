@@ -107,10 +107,10 @@ const DetailPage = () => {
     { label: 'Periode Gaji', value: data.periode},
     { label: '--------------------', value:'----------------------------'},
     { label: 'Gaji Pokok', value: data.gaji_pokok},
-    { label: 'Tunjangan Anak', value: data.tunjangan_anak},
     { label: 'Tunjangan Transport', value: data.tunjangan_transport},
     { label: 'Tunjangan Internet', value: data.tunjangan_internet},
     { label: 'Tunjangan Makan', value: data.tunjangan_makan},
+    { label: 'Tunjangan Lainnya', value: data.tunjangan_lainnya},
     { label: '--------------------', value:'----------------------------'},
     { label: 'Gaji Kotor', value: data.gaji_gross},
     { label: '--------------------', value:'----------------------------'},
@@ -119,6 +119,7 @@ const DetailPage = () => {
     { label: 'BPJS Jaminan Hari Tua (JHT)', value: data.bpjsjht_peg},
     { label: 'BPJS Jaminan Pensiun (JP)', value: data.bpjsjp_peg},
     { label: 'Pph 21 Bulanan', value: data.pph21_bulanan},
+    { label: '--------------------', value:'----------------------------'},
     { label: 'Kontribusi Perusahaan', value:''},
     { label: 'BPJS Kesehatan (KES)', value: data.bpjskes_perusahaan},
     { label: 'BPJS Jaminan Hari Tua (JHT)', value: data.bpjsjht_perusahaan},
@@ -128,6 +129,7 @@ const DetailPage = () => {
     { label: '--------------------', value:'----------------------------'},
     { label: 'Gaji Diterima', value: formatCurrency(data.gaji_diterima) },
     { label: '--------------------', value:'----------------------------'},
+    { label: 'Dibuat', value: data.dibuat},
     { label: 'Keterangan', value: data.keterangan},
   ]
 
@@ -135,7 +137,7 @@ const DetailPage = () => {
     const doc = new jsPDF()
 
     autoTable(doc, { html: '#detail-table' })
-    doc.save(`detail_kasbon-${data.id}.pdf`)
+    doc.save(`slip_gaji-${session.user.name}.pdf`)
   }
 
   const handleExcelExport = async () => {
@@ -156,7 +158,7 @@ const DetailPage = () => {
     const link = document.createElement('a')
 
     link.href = URL.createObjectURL(blob)
-    link.download = `DetailKasbon-${data.id}.xlsx`
+    link.download = `slip_gaji-${session.user.name}.xlsx`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
