@@ -47,8 +47,18 @@ model Pph21 {
 
 model Ptkp {
   id            Int     @id @default(autoincrement())
-  nama_ptkp     String?
-  nilai_ptkp    Float?
+  tk0           BigInt?
+  tk1           BigInt?
+  tk2           BigInt?
+  tk3           BigInt?
+  k0            BigInt?
+  k1            BigInt?
+  k2            BigInt?
+  k3            BigInt?
+  ki0           BigInt?
+  ki1           BigInt?
+  ki2           BigInt?
+  ki3           BigInt?
 
 }
 
