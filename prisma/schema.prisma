@@ -16,8 +16,8 @@ generator client {
 
 model User {
   id             Int       @id @default(autoincrement())
-  npwp           Int
-  nik            Int
+  npwp           BigInt?
+  nik            BigInt
   status_akun    String    @default("AKTIF")
   name           String?
   email          String    @unique
@@ -26,7 +26,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   alamat         String?
-  telepon        Int?
+  telepon        BigInt?
   tanggungan     Int?       @default(0)
   gajipokok      Int
   jabatan        String?
