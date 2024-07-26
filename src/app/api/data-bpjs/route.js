@@ -15,6 +15,12 @@ export async function GET(req) {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 })
   }
 
+  const formatToFixed = (num, decimals) => {
+    const factor = Math.pow(10, decimals)
+
+    return Math.round(num * factor) / factor
+  }
+
   try {
     const bpjs = await prisma.bpjs.findMany({
       select: {
@@ -33,20 +39,17 @@ export async function GET(req) {
     // Konversi nilai BPJS ke persen (dikali 100)
     const formattedbpjs = bpjs.map(bpjs => ({
       ...bpjs,
-      bpjskes_perusahaan: bpjs.bpjskes_perusahaan * 100,
-      bpjsjht_perusahaan: bpjs.bpjsjht_perusahaan * 100,
-      bpjsjkk_perusahaan: bpjs.bpjsjkk_perusahaan * 100,
-      bpjsjkm_perusahaan: bpjs.bpjsjkm_perusahaan * 100,
-      bpjsjp_perusahaan: bpjs.bpjsjp_perusahaan * 100,
-      bpjskes_peg: bpjs.bpjskes_peg * 100,
-      bpjsjht_peg: bpjs.bpjsjht_peg * 100,
-      bpjsjp_peg: bpjs.bpjsjp_peg * 100,
+      bpjskes_perusahaan: formatToFixed(bpjs.bpjskes_perusahaan * 100, 2),
+      bpjsjht_perusahaan: formatToFixed(bpjs.bpjsjht_perusahaan * 100, 2),
+      bpjsjkk_perusahaan: formatToFixed(bpjs.bpjsjkk_perusahaan * 100, 2),
+      bpjsjkm_perusahaan: formatToFixed(bpjs.bpjsjkm_perusahaan * 100, 2),
+      bpjsjp_perusahaan: formatToFixed(bpjs.bpjsjp_perusahaan * 100, 2),
+      bpjskes_peg: formatToFixed(bpjs.bpjskes_peg * 100, 2),
+      bpjsjht_peg: formatToFixed(bpjs.bpjsjht_peg * 100, 2),
+      bpjsjp_peg: formatToFixed(bpjs.bpjsjp_peg * 100, 2),
     }))
 
-
-    return NextResponse.json({
-      bpjs: formattedbpjs,
-    }, { status: 200 })
+    return NextResponse.json({bpjs:formattedbpjs}, { status: 200 })
   } catch (error) {
     console.error('Error fetching data bpjs:', error)
 
