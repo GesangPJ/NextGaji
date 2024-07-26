@@ -27,10 +27,11 @@ const HalamanDataBPJS = () =>{
   return(
     <div>
       <div>
-        <h1 className='text-xl font-bold'>
+        <h1 className='text-2xl font-bold'>
           Data Nilai BPJS
         </h1>
       </div>
+      <br />
       <div>
         <FormDataBpjs/>
       </div>
