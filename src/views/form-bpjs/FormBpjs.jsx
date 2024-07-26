@@ -1,30 +1,46 @@
 "use client"
 
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
-import { useRouter } from 'next/navigation'
-
-import { useSession } from 'next-auth/react'
-
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import InputAdornment from '@mui/material/InputAdornment'
-import Select from '@mui/material/Select'
-import InputLabel from '@mui/material/InputLabel'
-import FormControl from '@mui/material/FormControl'
-import Alert from '@mui/material/Alert'
+import {
+  Card, Grid, Button, TextField, CardHeader, CardContent,
+  InputAdornment, Alert, FormControl, InputLabel
+} from '@mui/material'
 
 const FormDataBpjs = () => {
+  const [data, setData] = useState('')
+
+  // const [data, setData] = useState({
+  //   bpjskes_perusahaan: '',
+  //   bpjsjht_perusahaan: '',
+  //   bpjsjkm_perusahaan: '',
+  //   bpjsjkk_perusahaan: '',
+  //   bpjsjp_perusahaan: '',
+  //   bpjskes_peg: '',
+  //   bpjsjht_peg: '',
+  //   bpjsjp_peg: '',
+  //   masterKey: ''
+  // })
+
   const [alert, setAlert] = useState(null)
   const [message, setMessage] = useState('')
   const formRef = useRef(null)
-  const router = useRouter()
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/data-bpjs`)
+        const result = await response.json()
+
+        console.log(result)
+
+        setData(result.bpjs[0])
+      } catch (error) {
+        console.error('Error fetching detail data:', error)
+      }
+    }
+
+    fetchData()
 
     if (alert) {
       const timer = setTimeout(() => {
@@ -36,50 +52,49 @@ const FormDataBpjs = () => {
     }
   }, [alert])
 
-  if (!session) {
-    return null
+  const handleChange = (e) => {
+    const { name, value } = e.target
+
+    setData(prevData => ({ ...prevData, [name]: value }))
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const data = new FormData(event.target)
-
-    const formData = {
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-      userType: data.get('userType')
-    }
+    const payload = { ...data }
 
     try {
-      const response = await fetch('/api/registrasi', {
-        method: 'POST',
+      const response = await fetch('/api/edit-bpjs', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
 
       const result = await response.json()
 
       if (response.ok) {
         setAlert('success')
-        setMessage('Akun berhasil didaftarkan!')
+        setMessage('Nilai BPJS berhasil diganti!')
         formRef.current.reset() // Kosongkan form setelah berhasil didaftarkan
       } else {
         setAlert('error')
-        setMessage(result.error || 'Terjadi kesalahan saat mendaftarkan akun.')
+        setMessage(result.error || 'Terjadi kesalahan saat mengubah Nilai BPJS.')
       }
     } catch (error) {
       setAlert('error')
-      setMessage('Terjadi kesalahan saat mendaftarkan akun.')
+      setMessage('Terjadi kesalahan saat mengubah Nilai BPJS.')
     }
   }
 
   return (
     <div>
+      <div>
+
+      </div>
+      <div>
       <Card>
-        <CardHeader title='Registrasi Akun' />
+        <CardHeader title='' />
         <CardContent>
           {alert && (
             <Alert severity={alert} style={{ marginBottom: '1rem' }}>
@@ -88,165 +103,256 @@ const FormDataBpjs = () => {
           )}
           <form onSubmit={handleSubmit} ref={formRef}>
             <Grid container spacing={5}>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjskes_perusahaan'
-                  name='bpjskes_perusahaan'
-                  fullWidth
-                  type='number'
-                  min='1'
-                  max='100'
-                  value=''
-                  label='BPJS Kesehatan (Perusahaan)'
-                  placeholder='BPJS Kesehatan'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+            <Grid item xs={12} container alignItems="center" spacing={2}>
+            <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Kesehatan (Perusahaan)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={9}>
+                  <TextField className='max-w-[105px]'
+                    id='bpjskes_perusahaan'
+                    name='bpjskes_perusahaan'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjskes_perusahaan}
+                    placeholder='BPJS JHT'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjsjht_perusahaan'
-                  name='bpjsjht_perusahaan'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Jaminan Hari Tua (Perusahaan)'
-                  placeholder='BPJS JHT'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+              <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Jaminan Hari Tua (Perusahaan)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={9}>
+                  <TextField className='max-w-[105px]'
+                    id='bpjsjht_perusahaan'
+                    name='bpjsjht_perusahaan'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjsjht_perusahaan}
+                    placeholder='BPJS JHT'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjsjkk_perusahaan'
-                  name='bpjsjkk_perusahaan'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Jaminan Kecelakaan (Perusahaan)'
-                  placeholder='BPJS JKK'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Jaminan Kecelakaan (Perusahaan)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[105px]'
+                    id='bpjsjkk_perusahaan'
+                    name='bpjsjkk_perusahaan'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjsjkk_perusahaan}
+                    placeholder='BPJS JKK'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjsjkm_perusahaan'
-                  name='bpjsjkm_perusahaan'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Jaminan Kematian (Perusahaan)'
-                  placeholder='BPJS JKM'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Jaminan Kematian (Perusahaan)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[105px]'
+                    id='bpjsjkm_perusahaan'
+                    name='bpjsjkm_perusahaan'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjsjkm_perusahaan}
+                    placeholder='BPJS JKM'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjsjp_perusahaan'
-                  name='bpjsjp_perusahaan'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Jaminan Pensiun (Perusahaan)'
-                  placeholder='BPJS JP'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Jaminan Pensiun (Perusahaan)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[105px]'
+                    id='bpjsjp_perusahaan'
+                    name='bpjsjp_perusahaan'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjsjp_perusahaan}
+                    placeholder='BPJS JHT'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjskes_peg'
-                  name='bpjskes_peg'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Kesehatan (Pegawai)'
-                  placeholder='BPJS Kesehatan'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Kesehatan (Pegawai)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[105px]'
+                    id='bpjskes_peg'
+                    name='bpjskes_peg'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjskes_peg}
+                    placeholder='BPJS JHT'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjsjht_peg'
-                  name='bpjsjht_peg'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Jaminan Hari Tua (Pegawai)'
-                  placeholder='BPJS JHT'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Jaminan Hari Tua (Pegawai)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[105px]'
+                    id='bpjsjht_peg'
+                    name='bpjsjht_peg'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjsjht_peg}
+                    placeholder='BPJS JHT'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='bpjsjp_peg'
-                  name='bpjsjp_peg'
-                  fullWidth
-                  type='number'
-                  value=''
-                  min='1'
-                  max='100'
-                  label='BPJS Jaminan Pensiun (Pegawai)'
-                  placeholder='BPJS JP'
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <i className="ri-percent-line"></i>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                      BPJS Jaminan Pensiun (Pegawai)
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[105px]'
+                    id='bpjsjp_peg'
+                    name='bpjsjp_peg'
+                    fullWidth
+                    type='number'
+                    min='0'
+                    max='100'
+                    value={data.bpjsjp_peg}
+                    placeholder='BPJS JHT'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <i className="ri-percent-line"></i>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} container alignItems="center" spacing={2}>
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <InputLabel shrink htmlFor='bpjsjht_perusahaan' className='text-lg font-bold'>
+                     Master Key
+                    </InputLabel>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                  <TextField
+                    className='max-w-[355px]'
+                    id='masterKey'
+                    name='masterKey'
+                    fullWidth
+                    type='text'
+                    value={data.masterKey}
+                    placeholder='Master Key'
+                  />
+                </Grid>
               </Grid>
               <Grid item xs={12} justifyContent="center" alignItems="center">
                 <Button variant='contained' type='submit'>
@@ -257,6 +363,7 @@ const FormDataBpjs = () => {
           </form>
         </CardContent>
       </Card>
+    </div>
     </div>
   )
 }
