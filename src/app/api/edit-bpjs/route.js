@@ -13,7 +13,7 @@ export const PUT = async (req) => {
   console.log('Token :', token)
 
   if (!token) {
-    console.log('Unauthorized Access : API Edit Karyawan')
+    console.log('Unauthorized Access : API Edit Bpjs')
 
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 })
   }
