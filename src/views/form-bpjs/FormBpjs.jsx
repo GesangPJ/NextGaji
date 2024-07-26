@@ -68,7 +68,8 @@ const FormDataBpjs = () => {
       bpjsjp_perusahaan: parseFloat(data.get('bpjsjp_perusahaan').replace(',', '.')),
       bpjskes_peg: parseFloat(data.get('bpjskes_peg').replace(',', '.')),
       bpjsjht_peg: parseFloat(data.get('bpjsjht_peg').replace(',', '.')),
-      bpjsjp_peg: parseFloat(data.get('bpjsjp_peg').replace(',', '.'))
+      bpjsjp_peg: parseFloat(data.get('bpjsjp_peg').replace(',', '.')),
+      masterKey: ''
     }
 
     try {
@@ -128,6 +129,16 @@ const FormDataBpjs = () => {
                   />
                 </Grid>
               ))}
+              <Grid>
+              <TextField
+                name="masterKey"
+                label="MasterKey"
+                type="password"
+                fullWidth
+                value={formData.masterKey}
+                onChange={handleChange}
+              />
+              </Grid>
               <Grid item xs={12} justifyContent="center" alignItems="center">
                 <Button variant='contained' type='submit'>
                   Kirim Data
