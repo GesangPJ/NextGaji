@@ -10,7 +10,7 @@ export async function GET(req) {
   console.log('Token:', token)
 
   if (!token) {
-    console.log('Unauthorized Access : API Dashboard Admin')
+    console.log('Unauthorized Access : API Ambil BPJS')
 
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 })
   }
