@@ -25,15 +25,15 @@ export const PUT = async (req) => {
       bpjsjkk_perusahaan,
       bpjsjkm_perusahaan,
       bpjsjp_perusahaan,
-      bpjsskes_peg,
+      bpjskes_peg,
       bpjsjht_peg,
       bpjsjp_peg,
       masterKey,
     } = await req.json()
 
-    if (!masterKey) {
-      return NextResponse.json({ error: "Data tidak boleh kosong!" }, { status: 400 })
-    }
+    // if (!masterKey) {
+    //   return NextResponse.json({ error: "Data tidak boleh kosong!" }, { status: 400 })
+    // }
 
     if (masterKey !== resetKey) {
       return NextResponse.json({ error: "MasterKey Salah!" }, { status: 403 })
@@ -48,7 +48,7 @@ export const PUT = async (req) => {
       bpjsjkk_perusahaan: convertToFloat(bpjsjkk_perusahaan),
       bpjsjkm_perusahaan: convertToFloat(bpjsjkm_perusahaan),
       bpjsjp_perusahaan: convertToFloat(bpjsjp_perusahaan),
-      bpjsskes_peg: convertToFloat(bpjsskes_peg),
+      bpjskes_peg: convertToFloat(bpjskes_peg),
       bpjsjht_peg: convertToFloat(bpjsjht_peg),
       bpjsjp_peg: convertToFloat(bpjsjp_peg),
     }
