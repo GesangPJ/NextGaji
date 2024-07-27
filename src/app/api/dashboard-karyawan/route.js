@@ -21,7 +21,7 @@ export async function GET(req) {
   const userId = searchParams.get('userId')
 
   if (!userId) {
-    return NextResponse.json({ error: 'ID tidak ditemukan!' }, { status: 400 })
+    return NextResponse.json({ error: 'ID User tidak ditemukan!' }, { status: 400 })
   }
 
   try {
@@ -35,8 +35,6 @@ export async function GET(req) {
         gaji_diterima:true,
         gaji_gross:true,
         pph21_bulanan:true,
-        pph21_tahunan:true,
-        ptkp_karyawan:true,
       },
     })
 
