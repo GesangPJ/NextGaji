@@ -31,6 +31,8 @@ model User {
   gajipokok      Int
   jabatan        String?
   jeniskelamin   String
+  menikah        Boolean    @default(false)
+  ptkp_gabungan  Boolean    @default(false)
 
   gajiAsKaryawan  Gaji[]   @relation("GajiKaryawan")
 }
