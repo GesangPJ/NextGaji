@@ -18,6 +18,13 @@ export const POST = async (req) => {
     return NextResponse.json({ error: 'Unauthorized Access' }, { status: 401 })
   }
 
+  const { searchParams } = new URL(req.url)
+  const namaKaryawan = decodeURIComponent(searchParams.get("namaKaryawan"))
+
+  if (!namaKaryawan) {
+    return NextResponse.json({ error: "Nama karyawan tidak ada" }, { status: 400 })
+  }
+
   try {
     const {
       userId,periode,is_bpjs,is_pph21,keterangan,masterKey
@@ -33,8 +40,14 @@ export const POST = async (req) => {
 
     // Ambil Gaji Pokok User
     const users = await prisma.user.findUnique({
-      where: {id:userId,},
+      where: {
+        name: {
+          contains: namaKaryawan,
+          mode: "insensitive"
+        },
+      },
       select:{
+        id:true,
         gajipokok:true,
         tanggungan:true,
         menikah:true,
@@ -52,7 +65,7 @@ export const POST = async (req) => {
     const pph21 = await prisma.pph21.findFirst()
 
     // Ambil nilai tunjangan
-    const tunjangan = await prisma.tunjangan.findFirst()
+    const tunjangans = await prisma.tunjangan.findFirst()
 
     if (!bpjs || !ptkp || !pph21 || !tunjangan) {
       console.log('Data referensi (bpjs, ptkp, pph21, tunjangan) tidak bisa diambil!')
@@ -262,7 +275,7 @@ export const POST = async (req) => {
     try{
       const gajis = await prisma.gaji.create({
         data:{
-          userId,
+          userId:users.id,
           dibuat,
           periode,
           diubah:dibuat,
