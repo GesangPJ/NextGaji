@@ -154,7 +154,7 @@ const FormDataPph21 = () => {
                 </Grid>
               </Grid>
               <Grid item xs={12} justifyContent="center" alignItems="center">
-                <Button variant='contained' type='submit'>
+                <Button variant='contained' type='submit' sx={ { borderRadius: 30 } }>
                   Ganti Nilai
                 </Button>
               </Grid>
