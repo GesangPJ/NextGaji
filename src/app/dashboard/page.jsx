@@ -9,8 +9,8 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
 //Import Komponen dan pastikan komponen menjadi dynamic page
-import TabelAdmin from '@/views/kasbon-admin/KasbonAdmin'
-import TabelKaryawan from '@/views/kasbon-karyawan/KasbonKaryawan'
+import TabelAdmin from '@/views/dashboard-gaji/DashboardAdmin'
+import TabelKaryawan from '@/views/dashboard-gaji/DashboardKaryawan'
 
 const DashboardAnalytics = () => {
   const { data: session, status } = useSession()
