@@ -34,8 +34,6 @@ export async function GET(req) {
         gaji_diterima:true,
         gaji_gross:true,
         pph21_bulanan:true,
-        pph21_tahunan:true,
-        ptkp_karyawan:true,
         userId: true,
         user: {
           select: {
@@ -45,20 +43,12 @@ export async function GET(req) {
       },
     })
 
-    // Konversi tanggal ke format ISO dan tambahkan nama karyawan dan admin
-    const formattedgajis = gajis.map(gaji => ({
-      ...gaji,
-      dibuat: gaji.dibuat.toISOString(),
-      diubah: gaji.diubah.toISOString(),
-      namaAkun: gaji.user?.name || '-',
-    }))
-
     // Menghitung jumlah total, total setuju, total lunas, dan belum lunas
     const GajiDiterima = gajis.reduce((acc, gaji) => acc + gaji.gaji_diterima, 0)
     const TotalPph21Bulanan = gajis.reduce((acc, gaji)=> acc + gaji.pph21_bulanan,0)
 
     return NextResponse.json({
-      gaji: formattedgajis,
+      gajis,
       GajiDiterima,
       TotalPph21Bulanan,
     }, { status: 200 })
