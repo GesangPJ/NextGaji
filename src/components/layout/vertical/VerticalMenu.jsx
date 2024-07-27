@@ -83,9 +83,10 @@ const VerticalMenu = ({ scrollMenu }) => {
               label='Data Pendukung'
               icon={<i className="ri-database-2-line"></i>}
             >
-              <MenuItem href='/dashboard/bpjs'>Data BPJS</MenuItem>
-              <MenuItem href='/dashboard/pph21'>Data Pph21</MenuItem>
-              <MenuItem href='/dashboard/tunjangan'>Data Tunjangan</MenuItem>
+              <MenuItem href='/dashboard/bpjs'>Data Nilai BPJS</MenuItem>
+              <MenuItem href='/dashboard/pph21'>Data Nilai Pph21</MenuItem>
+              <MenuItem href='/dashboard/ptkp'>Data Nilai PTKP</MenuItem>
+              <MenuItem href='/dashboard/tunjangan'>Data Nilai Tunjangan</MenuItem>
             </SubMenu>
             <SubMenu
               label='Manajemen Akun'
